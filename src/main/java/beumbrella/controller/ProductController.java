@@ -1,5 +1,6 @@
 package beumbrella.controller;
 
+
 import beumbrella.model.Product;
 import beumbrella.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -53,5 +56,13 @@ public class ProductController {
     @GetMapping("/find-new-product")
     public ResponseEntity<Iterable<Product>> findNewProduct() {
         return new ResponseEntity<>(productService.findNewProduct(), HttpStatus.OK);
+    }
+    @GetMapping("/find-by-name")
+    public ResponseEntity<Iterable<Product>>findAllByNameContaining(@RequestParam String name){
+        List<Product> products = (List<Product>) productService.findAllByNameContaining(name);
+        if (products.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 }

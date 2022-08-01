@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface ProductRepository extends JpaRepository<Product,Long> {
     @Query(value = "select * from products order by id desc limit 4", nativeQuery = true)
     Iterable<Product> findNewProduct();
+    Iterable<Product>findAllByNameContaining(String name);
 }

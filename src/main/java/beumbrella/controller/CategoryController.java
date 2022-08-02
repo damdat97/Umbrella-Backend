@@ -2,6 +2,7 @@ package beumbrella.controller;
 
 import beumbrella.model.Category;
 import beumbrella.model.Product;
+
 import beumbrella.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

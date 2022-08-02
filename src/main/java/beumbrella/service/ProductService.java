@@ -11,5 +11,6 @@ public interface ProductService extends GeneralService<Product> {
     Iterable<Product> findAllByNameContaining(String name);
 
     //Page<Product> findAllPageProduct(Pageable pageable);
-    Iterable<Product> findAllBySearch(String name, Long category_id );
+    Iterable<Product> findAllBySearch(String name, Long category_id , Long user_id,Integer from,Integer to);
+    Iterable<Product> find(String name,Long category_id, Integer from, Integer to);
 }

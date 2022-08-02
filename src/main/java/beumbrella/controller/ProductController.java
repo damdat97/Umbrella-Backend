@@ -73,8 +73,13 @@ public class ProductController {
     }
 
     @GetMapping("/find-by")
-    public ResponseEntity<Iterable<Product>> findAllBySearch(@RequestParam String name, @RequestParam Long category_id) {
-        return new ResponseEntity<>(productService.findAllBySearch('%'+name+'%', category_id), HttpStatus.OK);
+    public ResponseEntity<Iterable<Product>> findAllBySearch(@RequestParam String name, @RequestParam Long category_id, @RequestParam Long user_id, @RequestParam Integer from, @RequestParam Integer to) {
+        return new ResponseEntity<>(productService.findAllBySearch('%' + name + '%', category_id, user_id, from, to), HttpStatus.OK);
+    }
 
+    @GetMapping("/find")
+
+    public ResponseEntity<Iterable<Product>> find(@RequestParam String name, @RequestParam Long category_id, @RequestParam Integer from, @RequestParam Integer to) {
+        return new ResponseEntity<>(productService.find('%' + name + '%', category_id, from, to), HttpStatus.OK);
     }
 }

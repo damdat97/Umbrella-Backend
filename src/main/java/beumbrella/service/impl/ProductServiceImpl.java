@@ -9,10 +9,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductRepository productRepository;
+
     @Override
     public Iterable<Product> findAll() {
         return productRepository.findAll();
@@ -35,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void remove(Long id) {
-    productRepository.deleteById(id);
+        productRepository.deleteById(id);
     }
 
     @Override
@@ -49,8 +51,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Iterable<Product> findAllBySearch(String name, Long category_id) {
-        return productRepository.findAllBySearch(name, category_id);
+    public Iterable<Product> findAllBySearch(String name, Long category_id, Long user_id, Integer from, Integer to) {
+        return productRepository.findAllBySearch(name, category_id, user_id, from, to);
+    }
+
+    @Override
+    public Iterable<Product> find(String name, Long category_id, Integer from, Integer to) {
+        return productRepository.find(name, category_id, from, to);
     }
 
 

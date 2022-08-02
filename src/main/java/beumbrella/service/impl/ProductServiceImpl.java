@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductRepository productRepository;
+
     @Override
     public Iterable<Product> findAll() {
         return productRepository.findAll();
@@ -28,13 +30,28 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void remove(Long id) {
-    productRepository.deleteById(id);
+        productRepository.deleteById(id);
     }
 
     @Override
     public Iterable<Product> findNewProduct() {
         return productRepository.findNewProduct();
     }
+
+    @Override
+    public Iterable<Product> findProductByCate(long id) {
+        return productRepository.findProductByCategory(id);
+    }
+
+//    @Override
+//    public Iterable<Product> sortProductByQuantity(Long id) {
+//        return productRepository.sortProductByQuantity(id);
+//    }
+//
+//    @Override
+//    public Iterable<Product> sortProductByPrice(Long id) {
+//        return productRepository.sortProductByPrice(id);
+//    }
 
 
 }

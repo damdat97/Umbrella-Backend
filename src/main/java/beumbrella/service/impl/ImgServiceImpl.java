@@ -47,4 +47,9 @@ public class ImgServiceImpl implements ImgService {
     public Page<Image> findAll(Pageable pageable) {
         return null;
     }
+
+    @Override
+    public Iterable<Image> findAllByProductId(Long id) {
+        return imgRepository.findAllByProductId(id);
+    }
 }

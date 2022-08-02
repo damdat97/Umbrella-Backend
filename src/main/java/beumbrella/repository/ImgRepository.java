@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ImgRepository extends JpaRepository<Image,Long> {
+    Iterable<Image> findAllByProductId(Long id);
 }

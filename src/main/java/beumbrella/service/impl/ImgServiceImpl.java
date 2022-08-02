@@ -28,7 +28,7 @@ public class ImgServiceImpl implements ImgService {
 
     @Override
     public void save(Image image) {
-        save(image);
+        imgRepository.save(image);
 
     }
 

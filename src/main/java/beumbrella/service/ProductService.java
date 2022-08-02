@@ -2,7 +2,7 @@ package beumbrella.service;
 
 import beumbrella.model.Product;
 
-public interface ProductService extends IGeneralService<Product>{
+public interface ProductService extends GeneralService<Product>{
     Iterable<Product> findNewProduct();
 
 }

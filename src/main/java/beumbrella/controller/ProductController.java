@@ -28,9 +28,9 @@ public class ProductController {
     }
 
     @PostMapping()
-    public ResponseEntity<Iterable<Product>> add(@RequestBody Product product) {
+    public ResponseEntity add(@RequestBody Product product) {
         productService.save(product);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

@@ -4,8 +4,6 @@ import beumbrella.model.Product;
 import beumbrella.repository.ProductRepository;
 import beumbrella.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,6 +17,7 @@ public class ProductServiceImpl implements ProductService {
     public Iterable<Product> findAll() {
         return productRepository.findAll();
     }
+
 
     @Override
     public Optional<Product> findById(Long id) {
@@ -45,35 +44,17 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findProductByCategory(id);
     }
 
-    @Override
-    public Iterable<Product> sortProductByQuantity(Long id) {
-        return productRepository.sortProductByQuantity(id);
-    }
 
-    @Override
-    public Iterable<Product> sortProductByPrice(Long id) {
-        return productRepository.sortProductByPrice(id);
-    }
-
-    @Override
-    public Iterable<Product> findProductByUserId(Long id) {
-        return productRepository.findProductByUserId(id);
-    }
 
     @Override
     public Iterable<Product> findAllByNameContaining(String name) {
         return productRepository.findAllByNameContaining(name);
     }
-
     @Override
-    public Iterable<Product> findAllBySearch(String name, Long category_id, Long user_id, Integer from, Integer to) {
-        return productRepository.findAllBySearch(name, category_id, user_id, from, to);
+    public Iterable<Product> find(String name, String description, Integer from, Integer to) {
+        return productRepository.find(name,description, from, to);
     }
 
-    @Override
-    public Iterable<Product> find(String name, Long category_id, Integer from, Integer to) {
-        return productRepository.find(name, category_id, from, to);
-    }
 
 
 }

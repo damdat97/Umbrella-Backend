@@ -17,31 +17,14 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "select * from products join category c on products.category_id = c.id where c.id = :id", nativeQuery = true)
     Iterable<Product> findProductByCategory(@Param("id") Long id);
 
-    @Query(value = "select *\n" +
-            "from products\n" +
-            "         join category c on c.id = products.category_id\n" +
-            "where c.id = :id\n" +
-            "order by price desc", nativeQuery = true)
-    Iterable<Product> sortProductByPrice(@Param("id") Long id);
-
-    @Query(value = "select *\n" +
-            "from products\n" +
-            "         join category c on c.id = products.category_id\n" +
-            "where c.id = :id\n" +
-            "order by quantity desc", nativeQuery = true)
-    Iterable<Product> sortProductByQuantity(@Param("id") Long id);
 
     Iterable<Product> findAllByNameContaining(String name);
 
-    @Query(value = "select * from products p inner join category c on c.id = p.category_id " +
-            " where(:name is null or p.name like :name ) and"
-            + " (:category_id is null or c.id = :category_id)", nativeQuery = true)
-    Iterable<Product> findAllBySearch(@Param("name") String name,
-                                      @Param("category_id") Long category_id);
 
-    @Query(value = "select * from products p inner join category c on c.id = p.category_id where(:name is null or p.name like :name ) and (:category_id is null or c.id = :category_id) and (:from is null or p.price >=:from) and(:to is null or p.price<=:to)", nativeQuery = true)
+
+    @Query(value = "select * from products p  where(:name is null or p.name like :name ) and (:description is null or p.description like :description) and (:from is null or p.price >=:from) and(:to is null or p.price<=:to)", nativeQuery = true)
     Iterable<Product> find(@Param("name") String name,
-                                      @Param("category_id") Long category_id,
+                                      @Param("description") String description,
                                       @Param("from") Integer from,
                                       @Param("to") Integer to);
 }

@@ -5,5 +5,6 @@ import beumbrella.model.Product;
 public interface CommentService extends GeneralService<Comment>{
 
     Iterable<Product> findNewProduct();
+    Iterable<Comment> findNewComment();
 
 }

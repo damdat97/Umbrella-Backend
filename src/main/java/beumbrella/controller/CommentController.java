@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Optional;
 
 @Controller
@@ -52,7 +54,7 @@ public class CommentController {
 
     @GetMapping("/find-new-comment")
     public ResponseEntity<Iterable<Comment>> findNewComment() {
-        commentService.findNewProduct();
+        commentService.findNewComment();
         return new ResponseEntity<>( HttpStatus.OK);
     }
 }

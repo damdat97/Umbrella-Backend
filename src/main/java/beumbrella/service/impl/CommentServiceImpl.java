@@ -38,4 +38,9 @@ public class CommentServiceImpl implements CommentService {
     public Iterable<Product> findNewProduct() {
         return commentRepository.findNewProduct();
     }
+
+    @Override
+    public Iterable<Comment> findNewComment() {
+        return commentRepository.findNewComment();
+    }
 }

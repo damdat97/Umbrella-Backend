@@ -26,8 +26,8 @@ public class ImageController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/{productId}")
-    public ResponseEntity<Iterable<Image>> findAllBuProductId(@PathVariable Long productId){
-        return new ResponseEntity<>(imageService.findAllByProductId(productId),HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<Iterable<Image>> findAllByProductId(@PathVariable("id") Long id){
+        return new ResponseEntity<>(imageService.findAllByProductId(id),HttpStatus.OK);
     }
 }

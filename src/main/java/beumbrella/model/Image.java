@@ -3,13 +3,13 @@ package beumbrella.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "images")
+@Table(name = "image")
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String images;
+    private String image;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -35,11 +35,11 @@ public class Image {
         this.id = id;
     }
 
-    public String getImages() {
-        return images;
+    public String getImage() {
+        return image;
     }
 
-    public void setImages(String images) {
-        this.images = images;
+    public void setImage(String images) {
+        this.image = images;
     }
 }

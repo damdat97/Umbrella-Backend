@@ -13,4 +13,8 @@ public interface ProductService extends GeneralService<Product> {
     //Page<Product> findAllPageProduct(Pageable pageable);
     Iterable<Product> findAllBySearch(String name, Long category_id , Long user_id,Integer from,Integer to);
     Iterable<Product> find(String name,Long category_id, Integer from, Integer to);
+    Iterable<Product> findAllBySearch(String name, Long category_id );
+
+    Iterable<Product> findProductByCate(long id);
+
 }

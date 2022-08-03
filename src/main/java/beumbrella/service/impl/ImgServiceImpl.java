@@ -28,7 +28,7 @@ public class ImgServiceImpl implements ImgService {
 
     @Override
     public void save(Image image) {
-        save(image);
+        imgRepository.save(image);
 
     }
 
@@ -46,5 +46,10 @@ public class ImgServiceImpl implements ImgService {
     @Override
     public Page<Image> findAll(Pageable pageable) {
         return null;
+    }
+
+    @Override
+    public Iterable<Image> findAllByProductId(Long id) {
+        return imgRepository.findAllByProductId(id);
     }
 }

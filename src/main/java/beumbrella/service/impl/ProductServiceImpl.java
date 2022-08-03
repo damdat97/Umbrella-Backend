@@ -20,11 +20,6 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
 
-//    @Override
-//    public Page<Product> findAllPageProduct(Pageable pageable) {
-//        return productRepository.findAllPageProduct(pageable);
-//    }
-
     @Override
     public Optional<Product> findById(Long id) {
         return productRepository.findById(id);
@@ -43,6 +38,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Iterable<Product> findNewProduct() {
         return productRepository.findNewProduct();
+    }
+
+    @Override
+    public Iterable<Product> findProductByCate(long id) {
+        return productRepository.findProductByCategory(id);
     }
 
     @Override

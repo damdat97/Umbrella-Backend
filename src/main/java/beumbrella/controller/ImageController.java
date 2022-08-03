@@ -25,4 +25,9 @@ public class ImageController {
         imageService.save(image);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Iterable<Image>> findAllByProductId(@PathVariable("id") Long id){
+        return new ResponseEntity<>(imageService.findAllByProductId(id),HttpStatus.OK);
+    }
 }

@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -23,7 +25,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Product>> findById(@PathVariable long id) {
+    public ResponseEntity<Optional<Product>> findById(@PathVariable Long id) {
         return new ResponseEntity<>(productService.findById(id), HttpStatus.OK);
     }
 
@@ -34,7 +36,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> edit(@PathVariable long id, @RequestBody Product product) {
+    public ResponseEntity<Product> edit(@PathVariable Long id, @RequestBody Product product) {
         Optional<Product> product1 = productService.findById(id);
         if (!product1.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -45,13 +47,34 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Product> update(@PathVariable long id) {
+    public ResponseEntity<Product> update(@PathVariable Long id) {
         productService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/find-new-product")
+    @GetMapping("/find-new-products")
     public ResponseEntity<Iterable<Product>> findNewProduct() {
         return new ResponseEntity<>(productService.findNewProduct(), HttpStatus.OK);
+    }
+
+    @GetMapping("/find-products-by-category/{id}")
+    public ResponseEntity<Iterable<Product>> findProductByCategories(@PathVariable long id) {
+        return new ResponseEntity<>(productService.findProductByCate(id), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/find-by-name")
+    public ResponseEntity<Iterable<Product>> findAllByNameContaining(@RequestParam String name) {
+        List<Product> products = (List<Product>) productService.findAllByNameContaining(name);
+        if (products.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("/find-by")
+    public ResponseEntity<Iterable<Product>> findAllBySearch(@RequestParam String name, @RequestParam Long category_id) {
+        return new ResponseEntity<>(productService.findAllBySearch('%'+name+'%', category_id), HttpStatus.OK);
+
     }
 }

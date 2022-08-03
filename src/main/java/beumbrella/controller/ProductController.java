@@ -8,11 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/products")
 @CrossOrigin("*")
+@RequestMapping("/products")
+
 
 public class ProductController {
     @Autowired
@@ -61,12 +64,19 @@ public class ProductController {
         return new ResponseEntity<>(productService.findProductByCate(id), HttpStatus.OK);
     }
 
-//    @GetMapping("/sort-products-by-quantity/{id}")
-//    public ResponseEntity<Iterable<Product>> sortProductByQuantity(@PathVariable Long id) {
-//        return new ResponseEntity<>(productService.sortProductByQuantity(id), HttpStatus.OK);
-//    }
-//    @GetMapping("/sort-products-by-price/{id}")
-//    public ResponseEntity<Iterable<Product>> sortProductByPrice(@PathVariable Long id) {
-//        return new ResponseEntity<>(productService.sortProductByPrice(id), HttpStatus.OK);
-//    }
+
+    @GetMapping("/find-by-name")
+    public ResponseEntity<Iterable<Product>> findAllByNameContaining(@RequestParam String name) {
+        List<Product> products = (List<Product>) productService.findAllByNameContaining(name);
+        if (products.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("/find-by")
+    public ResponseEntity<Iterable<Product>> findAllBySearch(@RequestParam String name, @RequestParam Long category_id) {
+        return new ResponseEntity<>(productService.findAllBySearch('%'+name+'%', category_id), HttpStatus.OK);
+
+    }
 }

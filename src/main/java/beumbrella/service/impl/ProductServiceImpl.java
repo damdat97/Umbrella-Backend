@@ -4,6 +4,8 @@ import beumbrella.model.Product;
 import beumbrella.repository.ProductRepository;
 import beumbrella.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -43,15 +45,15 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findProductByCategory(id);
     }
 
-//    @Override
-//    public Iterable<Product> sortProductByQuantity(Long id) {
-//        return productRepository.sortProductByQuantity(id);
-//    }
-//
-//    @Override
-//    public Iterable<Product> sortProductByPrice(Long id) {
-//        return productRepository.sortProductByPrice(id);
-//    }
+    @Override
+    public Iterable<Product> findAllByNameContaining(String name) {
+        return productRepository.findAllByNameContaining(name);
+    }
+
+    @Override
+    public Iterable<Product> findAllBySearch(String name, Long category_id) {
+        return productRepository.findAllBySearch(name, category_id);
+    }
 
 
 }

@@ -46,6 +46,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Iterable<Product> sortProductByQuantity(Long id) {
+        return productRepository.sortProductByQuantity(id);
+    }
+
+    @Override
+    public Iterable<Product> sortProductByPrice(Long id) {
+        return productRepository.sortProductByPrice(id);
+    }
+
+    @Override
+    public Iterable<Product> findProductByUserId(Long id) {
+        return productRepository.findProductByUserId(id);
+    }
+
+    @Override
     public Iterable<Product> findAllByNameContaining(String name) {
         return productRepository.findAllByNameContaining(name);
     }

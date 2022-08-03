@@ -17,6 +17,20 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "select * from products join category c on products.category_id = c.id where c.id = :id", nativeQuery = true)
     Iterable<Product> findProductByCategory(@Param("id") Long id);
 
+    @Query(value = "select *\n" +
+            "from products\n" +
+            "         join category c on c.id = products.category_id\n" +
+            "where c.id = :id\n" +
+            "order by price desc", nativeQuery = true)
+    Iterable<Product> sortProductByPrice(@Param("id") Long id);
+
+    @Query(value = "select *\n" +
+            "from products\n" +
+            "         join category c on c.id = products.category_id\n" +
+            "where c.id = :id\n" +
+            "order by quantity desc", nativeQuery = true)
+    Iterable<Product> sortProductByQuantity(@Param("id") Long id);
+
     Iterable<Product> findAllByNameContaining(String name);
 
     @Query(value = "select * from products p inner join category c on c.id = p.category_id " +
@@ -25,4 +39,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Iterable<Product> findAllBySearch(@Param("name") String name,
                                       @Param("category_id") Long category_id);
 
+    @Query(value = "select * from products where user_id = :id", nativeQuery = true)
+    Iterable<Product> findProductByUserId(@Param("id") Long id);
 }

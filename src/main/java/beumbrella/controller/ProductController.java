@@ -15,6 +15,8 @@ import java.util.Optional;
 @Controller
 @CrossOrigin("*")
 @RequestMapping("/products")
+
+
 public class ProductController {
     @Autowired
     ProductServiceImpl productService;
@@ -62,6 +64,15 @@ public class ProductController {
         return new ResponseEntity<>(productService.findProductByCate(id), HttpStatus.OK);
     }
 
+    @GetMapping("/sort-products-by-quantity/{id}")
+    public ResponseEntity<Iterable<Product>> sortProductByQuantity(@PathVariable Long id) {
+        return new ResponseEntity<>(productService.sortProductByQuantity(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/sort-products-by-price/{id}")
+    public ResponseEntity<Iterable<Product>> sortProductByPrice(@PathVariable Long id) {
+        return new ResponseEntity<>(productService.sortProductByPrice(id), HttpStatus.OK);
+    }
 
     @GetMapping("/find-by-name")
     public ResponseEntity<Iterable<Product>> findAllByNameContaining(@RequestParam String name) {
@@ -74,7 +85,11 @@ public class ProductController {
 
     @GetMapping("/find-by")
     public ResponseEntity<Iterable<Product>> findAllBySearch(@RequestParam String name, @RequestParam Long category_id) {
-        return new ResponseEntity<>(productService.findAllBySearch('%'+name+'%', category_id), HttpStatus.OK);
+        return new ResponseEntity<>(productService.findAllBySearch('%' + name + '%', category_id), HttpStatus.OK);
+    }
 
+    @GetMapping("/find-my-shop/{id}")
+    public ResponseEntity<Iterable<Product>> findProductByUserId(@PathVariable Long id) {
+        return new ResponseEntity<>(productService.findProductByUserId(id), HttpStatus.OK);
     }
 }

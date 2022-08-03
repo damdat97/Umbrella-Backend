@@ -2,6 +2,7 @@ package beumbrella.controller;
 
 import beumbrella.model.Comment;
 import beumbrella.service.CommentService;
+import beumbrella.service.impl.CommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/comments")
 public class CommentController {
     @Autowired
-    CommentService commentService;
+    CommentServiceImpl commentService;
 
     @GetMapping
     public ResponseEntity<Iterable<Comment>> findAll() {
@@ -29,8 +30,8 @@ public class CommentController {
 
     @PostMapping()
     public ResponseEntity add(@RequestBody Comment comment) {
-        commentService.save(comment);
-        return new ResponseEntity<>(comment, HttpStatus.CREATED);
+        final Comment add = commentService.add(comment);
+        return new ResponseEntity<>(add, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

@@ -27,4 +27,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                                       @Param("description") String description,
                                       @Param("from") Integer from,
                                       @Param("to") Integer to);
+    @Query(value = "select * from products where user_id = :id", nativeQuery = true)
+    Iterable<Product> findProductByUserId(@Param("id") Long id);
 }

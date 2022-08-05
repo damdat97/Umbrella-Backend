@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+@Validated
 @Controller
 @CrossOrigin("*")
 @RequestMapping("/products")
@@ -30,7 +33,7 @@ public class ProductController {
     }
 
     @PostMapping()
-    public ResponseEntity add(@RequestBody Product product) {
+    public ResponseEntity add(@Valid @RequestBody Product product) {
         productService.save(product);
         return new ResponseEntity<>(product, HttpStatus.CREATED);
     }

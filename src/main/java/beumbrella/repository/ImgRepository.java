@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ImgRepository extends JpaRepository<Image,Long> {
-    @Query(value = "select * from image i join product p on p.id = i.product_id\n" +
+    @Query(value = "select * from image i join products p on p.id = i.product_id\n" +
             "where p.id = :id", nativeQuery = true)
     Iterable<Image> findAllByProductId(@Param("id") Long id);
 }

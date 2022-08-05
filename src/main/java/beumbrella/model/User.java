@@ -1,6 +1,7 @@
 package beumbrella.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -12,16 +13,21 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "tên không được để trống")
     private String name;
+    @NotBlank(message = "số điện thoại không được để trống")
     private String phone;
     private boolean status;
     @Column(unique = true, nullable = false)
+    @NotBlank(message = "username không được để trống")
     private String username;
 
     @Column(nullable = false)
+    @NotBlank(message = "password không được để trống")
     private String password;
 
     @Column(nullable = false)
+    @NotBlank(message = "confirmPassword không được để trống")
     private String confirmPassword;
     private boolean enabled = true;
 

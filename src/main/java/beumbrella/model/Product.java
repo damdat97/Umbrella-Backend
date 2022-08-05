@@ -1,16 +1,23 @@
 package beumbrella.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "products")
-public class Product {
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+//    @NotEmpty(message = "Không được để trống")
     private String name;
+//    @NotEmpty(message = "Không được để trống")
     private String description;
-    private int price;
+//    @NotEmpty(message = "Không được để trống")
+    private double price;
+//    @NotEmpty(message = "Không được để trống")
     private int quantity;
 
     @ManyToOne
@@ -49,11 +56,11 @@ public class Product {
         this.description = description;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

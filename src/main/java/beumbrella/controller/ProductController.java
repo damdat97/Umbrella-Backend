@@ -63,7 +63,7 @@ public class ProductController {
     }
 
 
-    @GetMapping("/find-by-name")
+    @GetMapping("/find-products-by-name")
     public ResponseEntity<Iterable<Product>> findAllByNameContaining(@RequestParam String name) {
         List<Product> products = (List<Product>) productService.findAllByNameContaining(name);
         if (products.isEmpty()) {
@@ -72,7 +72,7 @@ public class ProductController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @GetMapping("/find")
+    @GetMapping("/find-products-by-filter")
     public ResponseEntity<Iterable<Product>> find(@RequestParam String name, @RequestParam String description, @RequestParam Integer from, @RequestParam Integer to) {
         return new ResponseEntity<>(productService.find('%' + name + '%', '%'+ description + '%', from, to), HttpStatus.OK);
     }

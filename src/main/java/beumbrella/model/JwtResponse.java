@@ -2,9 +2,10 @@ package beumbrella.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import java.io.Serializable;
 import java.util.Collection;
 
-public class JwtResponse {
+public class JwtResponse implements Serializable {
     private Long id;
     private String token;
     private String type = "Bearer";

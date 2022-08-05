@@ -3,6 +3,7 @@ package beumbrella.repository;
 import beumbrella.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,7 +21,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Iterable<Product> findAllByNameContaining(String name);
 
-
+    @Query(value = "select * from products p join user_table ut on p.user_id = ut.id where p.user_id != :id", nativeQuery = true)
+    Iterable<Product> findAllByUserIdNot(@Param("id") Long id);
 
     @Query(value = "select * from products p  where(:name is null or p.name like :name ) and (:description is null or p.description like :description) and (:from is null or p.price >=:from) and(:to is null or p.price<=:to)", nativeQuery = true)
     Iterable<Product> find(@Param("name") String name,

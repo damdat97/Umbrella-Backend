@@ -1,6 +1,7 @@
 package beumbrella.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -11,13 +12,13 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-//    @NotEmpty(message = "Không được để trống")
+    @NotBlank(message = "Tên không được để trống")
     private String name;
-//    @NotEmpty(message = "Không được để trống")
+    @NotBlank(message = "Nội dung không được để trống")
     private String description;
-//    @NotEmpty(message = "Không được để trống")
+    @NotNull(message = "Giá tiền không được để trống")
     private double price;
-//    @NotEmpty(message = "Không được để trống")
+    @NotNull(message = "Số lượng không được để trống")
     private int quantity;
 
     @ManyToOne

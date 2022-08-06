@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+@Validated
 @Controller
 @CrossOrigin("*")
 @RequestMapping("/products")
@@ -30,7 +33,7 @@ public class ProductController {
     }
 
     @PostMapping()
-    public ResponseEntity add(@RequestBody Product product) {
+    public ResponseEntity add(@Valid @RequestBody Product product) {
         productService.save(product);
         return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
@@ -65,10 +68,7 @@ public class ProductController {
 
     @GetMapping("/find-products-by-name")
     public ResponseEntity<Iterable<Product>> findAllByNameContaining(@RequestParam String name) {
-        List<Product> products = (List<Product>) productService.findAllByNameContaining(name);
-        if (products.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
+        Iterable<Product> products = productService.findAllByNameContaining(name);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
@@ -79,5 +79,15 @@ public class ProductController {
     @GetMapping("/find-my-shop/{id}")
     public ResponseEntity<Iterable<Product>> findProductByUserId(@PathVariable Long id){
         return new ResponseEntity<>(productService.findProductByUserId(id),HttpStatus.OK);
+    }
+
+    @GetMapping("/find-products-by-user-id-not/{id}")
+    public ResponseEntity<Iterable<Product>> findAllByUserIdNot(@PathVariable Long id){
+        return new ResponseEntity<>(productService.findAllByUserIdNot(id),HttpStatus.OK);
+    }
+
+    @GetMapping("/find-products-by-category-and-user-id-not/{categoryId}/{userId}")
+    public ResponseEntity<Iterable<Product>> findProductByCategoryAndUserIdNot(@PathVariable Long categoryId, @PathVariable Long userId){
+        return new ResponseEntity<>(productService.findProductByCategoryAndUserIdNot(categoryId, userId),HttpStatus.OK);
     }
 }

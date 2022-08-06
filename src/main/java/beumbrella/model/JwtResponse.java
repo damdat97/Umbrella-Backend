@@ -10,16 +10,26 @@ public class JwtResponse implements Serializable {
     private String token;
     private String type = "Bearer";
     private String username;
+    private String name;
     private Boolean status;
 
     private Collection<? extends GrantedAuthority> roles;
 
-    public JwtResponse(String accessToken, Long id, String username, Boolean status, Collection<? extends GrantedAuthority> roles) {
+    public JwtResponse(String accessToken, Long id, String username, String name, Boolean status, Collection<? extends GrantedAuthority> roles) {
         this.token = accessToken;
         this.username = username;
+        this.name = name;
         this.status = status;
         this.roles = roles;
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getToken() {

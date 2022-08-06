@@ -57,4 +57,9 @@ public class CommentController {
         commentService.findNewComment();
         return new ResponseEntity<>( HttpStatus.OK);
     }
+
+    @GetMapping("/find-comment-by-product-id/{id}")
+    public ResponseEntity<Iterable<Comment>> findCommentByProductId(@PathVariable long id) {
+        return new ResponseEntity<>(commentService.findCommentByProductId(id), HttpStatus.OK);
+    }
 }

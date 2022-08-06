@@ -68,10 +68,7 @@ public class ProductController {
 
     @GetMapping("/find-products-by-name")
     public ResponseEntity<Iterable<Product>> findAllByNameContaining(@RequestParam String name) {
-        List<Product> products = (List<Product>) productService.findAllByNameContaining(name);
-        if (products.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
+        Iterable<Product> products = productService.findAllByNameContaining(name);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 

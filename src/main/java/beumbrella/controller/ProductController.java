@@ -88,4 +88,9 @@ public class ProductController {
     public ResponseEntity<Iterable<Product>> findAllByUserIdNot(@PathVariable Long id){
         return new ResponseEntity<>(productService.findAllByUserIdNot(id),HttpStatus.OK);
     }
+
+    @GetMapping("/find-products-by-category-and-user-id-not/{categoryId}/{userId}")
+    public ResponseEntity<Iterable<Product>> findProductByCategoryAndUserIdNot(@PathVariable Long categoryId, @PathVariable Long userId){
+        return new ResponseEntity<>(productService.findProductByCategoryAndUserIdNot(categoryId, userId),HttpStatus.OK);
+    }
 }

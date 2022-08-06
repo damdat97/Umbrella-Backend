@@ -28,7 +28,11 @@ public class Shopping_CartController {
     UserServiceImpl userService;
     @GetMapping
     public ResponseEntity<Iterable<CartItem>> findAll() {
-        return new ResponseEntity<>(cartService.findAll(), HttpStatus.OK);
+        var result = cartService.findAll();
+        // 1. loại bỏ những cartItem có status là đã thanh toán
+        // code
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
     @GetMapping({"/cart/{id}"})
     public ResponseEntity<Optional<CartItem>> findCartItem(@PathVariable Long id) {

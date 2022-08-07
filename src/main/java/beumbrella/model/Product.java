@@ -14,6 +14,7 @@ public class Product implements Serializable {
     private Long id;
     @NotBlank(message = "Tên không được để trống")
     private String name;
+    @Column(columnDefinition = "LONGTEXT")
     @NotBlank(message = "Nội dung không được để trống")
     private String description;
     @NotNull(message = "Giá tiền không được để trống")

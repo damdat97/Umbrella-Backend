@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +51,7 @@ public class Shopping_CartController {
                 if (item.getQuantity() < item.getProduct().getQuantity()) {
                     item.setQuantity(item.getQuantity() + cartItem.getQuantity());
                     item.getProduct().setQuantity(item.getProduct().getQuantity() - cartItem.getQuantity());
+                    cartItem.setDate(LocalDate.now());
                     cartService.save(item);
                     return new ResponseEntity<>(item, HttpStatus.OK);
                 } else {
@@ -58,6 +60,7 @@ public class Shopping_CartController {
             }
         }
         product.get().setQuantity(product.get().getQuantity() - cartItem.getQuantity());
+        cartItem.setDate(LocalDate.now());
        cartService.save(cartItem);
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
     }
@@ -72,6 +75,7 @@ public class Shopping_CartController {
         }
         cartItem.setId(cartItemOptional.get().getId());
         cartItemOptional.get().getProduct().setQuantity(cartItemOptional.get().getProduct().getQuantity() - (cartItem.getQuantity()-cartItemOptional.get().getQuantity()));
+
         cartService.save(cartItem);
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
     }

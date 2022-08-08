@@ -10,4 +10,7 @@ public interface CartService extends GeneralService<CartItem>{
 
     Iterable<CartItem> findAllCartByUserId( Long id);
 
+    Iterable<CartItem> findAllCartByProductAndUserId(Long id);
+
+
 }

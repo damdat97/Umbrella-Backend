@@ -95,4 +95,9 @@ public class Shopping_CartController {
     public ResponseEntity<Iterable<CartItem>> findAllCartItem(@PathVariable Long id) {
         return new ResponseEntity<>(cartService.findAllCartByUserId(id), HttpStatus.OK);
     }
+
+    @GetMapping("/find-all-carts-by-ownerId/{id}")
+    public ResponseEntity<Iterable<CartItem>> findAllCartItemByOwnerId(@PathVariable Long id) {
+        return new ResponseEntity<>(cartService.findAllCartByProductAndUserId(id), HttpStatus.OK);
+    }
 }

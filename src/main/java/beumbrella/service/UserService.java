@@ -34,6 +34,6 @@ public interface UserService extends UserDetailsService {
 
     Iterable<User> findAllExcept(Long id);
 
-    Iterable<User> findCustomerByPhone(String phone);
+    Iterable<User> findCustomerByPhone(String phone, Long id);
 
 }

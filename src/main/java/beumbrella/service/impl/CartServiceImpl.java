@@ -54,4 +54,9 @@ public class CartServiceImpl implements CartService {
     public Iterable<CartItem> findByUserId(Long id) {
         return cartRepository.findByUserId(id);
     }
+
+    @Override
+    public Iterable<CartItem> findAllCartByUserId(Long id) {
+        return cartRepository.findAllCartByUserId(id);
+    }
 }

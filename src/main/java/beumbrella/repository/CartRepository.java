@@ -19,4 +19,9 @@ public interface CartRepository extends JpaRepository<CartItem,Long> {
             "join user_table ut on p.user_id = ut.id\n" +
             "where p.user_id = :id", nativeQuery = true)
     Iterable<CartItem> findAllCartByProductAndUserId(@Param("id") Long id);
+
+    @Query(value="select * from cart_item join products p on cart_item.product_id = p.id\n" +
+            "join user_table ut on p.user_id = ut.id\n" +
+            "where p.user_id = :id and cart_item.id = :cart_id", nativeQuery = true)
+    Iterable<CartItem> findDetailCart(@Param("id") Long id, @Param("cart_id") Long cart_id);
 }

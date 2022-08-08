@@ -6,13 +6,12 @@ import beumbrella.repository.CartRepository;
 import beumbrella.repository.UserRepository;
 import beumbrella.service.CartService;
 import beumbrella.service.CategoryService;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @SessionScope
 @Service
@@ -23,11 +22,34 @@ public class CartServiceImpl implements CartService {
     @Autowired
     UserRepository userRepository;
 
+    // lấy tất cả cart item có trạng thái là 0 - chưa thanh toán
     @Override
     public Iterable<CartItem> findAll() {
-        return cartRepository.findAll();
+        var items = cartRepository.findAll();
+        if(items.isEmpty()) return items;
+        for(var item : items){
+            if(item.getStatus() != 0){
+                items.remove(item);
+            }
+        }
+        return items;
     }
 
+    @Override
+    public boolean checkout(Long userId) {
+        try {
+            var items = cartRepository.findAllCartByUserId(userId);
+            for (CartItem item : items){
+                if(item.getStatus() == 0){
+                    item.setStatus(1);
+                    cartRepository.save(item);
+                }
+            }
+            return true;
+        }catch(Exception ex) {
+            return false;
+        }
+    }
     @Override
     public Optional<CartItem> findById(Long id) {
         return cartRepository.findById(id);
@@ -49,14 +71,16 @@ public class CartServiceImpl implements CartService {
     public void remove(Long id) {
         cartRepository.deleteById(id);
     }
-
     @Override
-    public Iterable<CartItem> findByUserId(Long id) {
-        return cartRepository.findByUserId(id);
-    }
-
-    @Override
-    public Iterable<CartItem> findAllCartByUserId(Long id) {
-        return cartRepository.findAllCartByUserId(id);
+    public List<CartItem> findAllCartByUserId(Long id) {
+        var result = new ArrayList<CartItem>();
+        var items = cartRepository.findAllCartByUserId(id);
+        if(items == null) return result;
+        for(CartItem item : items){
+            if(item.getStatus() == 0){
+                result.add((item));
+            }
+        }
+        return result;
     }
 }

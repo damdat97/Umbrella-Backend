@@ -2,12 +2,14 @@ package beumbrella.service;
 
 import beumbrella.model.CartItem;
 import org.springframework.data.repository.query.Param;
+import org.w3c.dom.stylesheets.LinkStyle;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CartService extends GeneralService<CartItem>{
-    Iterable<CartItem> findByUserId(Long id);
+    List<CartItem> findAllCartByUserId(Long id);
 
-    Iterable<CartItem> findAllCartByUserId( Long id);
+    boolean checkout(Long userId);
 
 }

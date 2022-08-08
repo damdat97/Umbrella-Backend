@@ -31,9 +31,6 @@ public class Shopping_CartController {
     @GetMapping
     public ResponseEntity<Iterable<CartItem>> findAll() {
         Iterable<CartItem> result = cartService.findAll();
-        // 1. loại bỏ những cartItem có status là đã thanh toán
-        // code
-
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     @GetMapping({"/cart/{id}"})
@@ -45,7 +42,7 @@ public class Shopping_CartController {
     public ResponseEntity<CartItem> addToShoppingCart(@RequestBody CartItem cartItem) {
          User currentUser = userService.getCurrentUser();
         cartItem.setUser(currentUser);
-        Iterable<CartItem> listCart = cartService.findByUserId(cartItem.getUser().getId());
+        Iterable<CartItem> listCart = cartService.findAllCartByUserId(cartItem.getUser().getId());
         Optional<Product> product = productService.findById(cartItem.getProduct().getId());
         for (CartItem item : listCart) {
             if (item.getProduct().getId().equals(cartItem.getProduct().getId())) {
@@ -69,7 +66,10 @@ public class Shopping_CartController {
     }
 
 
-
+    @PutMapping({"/checkout/{userId}"})
+    public ResponseEntity<Boolean> checkout(@PathVariable Long userId) {
+        return new ResponseEntity<>(cartService.checkout(userId), HttpStatus.OK);
+    }
     @PutMapping({"/cart/{id}"})
     public ResponseEntity<CartItem> updateShoppingCart(@PathVariable Long id, @RequestBody CartItem cartItem) {
         Optional<CartItem> cartItemOptional = cartService.findById(id);

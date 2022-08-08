@@ -82,6 +82,9 @@ public class UserController {
             if (currentUser.getUsername().equals(user.getUsername())) {
                 return new ResponseEntity<>("Tên người dùng đã tồn tại", HttpStatus.BAD_REQUEST);
             }
+            if (currentUser.getEmail().equals(user.getEmail())) {
+                return new ResponseEntity<>("Email đã tồn tại", HttpStatus.BAD_REQUEST);
+            }
         }
         if (!userService.isCorrectConfirmPassword(user)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

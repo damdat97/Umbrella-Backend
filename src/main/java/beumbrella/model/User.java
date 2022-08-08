@@ -1,6 +1,7 @@
 package beumbrella.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Set;
@@ -17,6 +18,12 @@ public class User implements Serializable {
     private String name;
     @NotBlank(message = "số điện thoại không được để trống")
     private String phone;
+    @NotBlank(message = "Địa chỉ không được để trống")
+    private String address;
+    @Column(unique = true, nullable = false)
+    @Email
+    @NotBlank(message = "email không để trống")
+    private String email;
     private boolean status;
     @Column(unique = true, nullable = false)
     @NotBlank(message = "username không được để trống")
@@ -48,6 +55,22 @@ public class User implements Serializable {
     }
 
     public User() {
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public static long getSerialVersionUID() {

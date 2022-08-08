@@ -42,8 +42,8 @@ public class Shopping_CartController {
 
     @PostMapping()
     public <userId> ResponseEntity<CartItem> addToShoppingCart(@RequestBody CartItem cartItem) {
-        var curentUser = userService.getCurrentUser();
-        cartItem.setUser(curentUser);
+        var currentUser = userService.getCurrentUser();
+        cartItem.setUser(currentUser);
         Iterable<CartItem> listCart = cartService.findByUserId(cartItem.getUser().getId());
         Optional<Product> product = productService.findById(cartItem.getProduct().getId());
         for (CartItem item : listCart) {
@@ -52,6 +52,7 @@ public class Shopping_CartController {
                     item.setQuantity(item.getQuantity() + cartItem.getQuantity());
                     item.getProduct().setQuantity(item.getProduct().getQuantity() - cartItem.getQuantity());
                     cartItem.setDate(LocalDate.now());
+                    cartItem.setStatus(0);
                     cartService.save(item);
                     return new ResponseEntity<>(item, HttpStatus.OK);
                 } else {
@@ -61,6 +62,7 @@ public class Shopping_CartController {
         }
         product.get().setQuantity(product.get().getQuantity() - cartItem.getQuantity());
         cartItem.setDate(LocalDate.now());
+        cartItem.setStatus(0);
        cartService.save(cartItem);
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
     }

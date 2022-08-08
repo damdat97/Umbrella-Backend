@@ -26,7 +26,7 @@ public class CommentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Comment>> findById(@PathVariable long id) {
+    public ResponseEntity<Optional<Comment>> findById(@PathVariable Long id) {
         return new ResponseEntity<>(commentService.findById(id), HttpStatus.OK);
     }
 
@@ -37,7 +37,7 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Comment> edit(@PathVariable long id, @RequestBody Comment comment) {
+    public ResponseEntity<Comment> edit(@PathVariable Long id, @RequestBody Comment comment) {
         Optional<Comment> comment1 = commentService.findById(id);
         if (!comment1.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -47,7 +47,7 @@ public class CommentController {
         return new ResponseEntity<>(comment, HttpStatus.CREATED);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Comment> update(@PathVariable long id) {
+    public ResponseEntity<Comment> update(@PathVariable Long id) {
         commentService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -59,7 +59,7 @@ public class CommentController {
     }
 
     @GetMapping("/find-comment-by-product-id/{id}")
-    public ResponseEntity<Iterable<Comment>> findCommentByProductId(@PathVariable long id) {
+    public ResponseEntity<Iterable<Comment>> findCommentByProductId(@PathVariable Long id) {
         return new ResponseEntity<>(commentService.findCommentByProductId(id), HttpStatus.OK);
     }
 }

@@ -132,4 +132,9 @@ public class UserServiceImpl implements UserService {
     public Optional<User> lockedUser(Long id) {
         return userRepository.lockedUser(id);
     }
+
+    @Override
+    public Iterable<User> findAllExcept(Long id) {
+        return userRepository.findAllExcept(id);
+    }
 }

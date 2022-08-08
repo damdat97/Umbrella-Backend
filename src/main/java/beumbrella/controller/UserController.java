@@ -184,4 +184,9 @@ public class UserController {
         return new ResponseEntity<Object>(
                 apiError, new HttpHeaders(), apiError.getStatus());
     }
+
+    @GetMapping("/find-all-customers-expect-user/{id}")
+    public ResponseEntity<Iterable<User>> findAllCustomersExpectUser(@PathVariable Long id) {
+        return new ResponseEntity<>(userService.findAllExcept(id), HttpStatus.OK);
+    }
 }

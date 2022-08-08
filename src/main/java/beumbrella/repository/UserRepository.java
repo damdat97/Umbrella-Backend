@@ -27,6 +27,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select * from user_table ut where ut.id != :id", nativeQuery = true)
     Iterable<User> findAllExcept(@Param("id") Long id);
 
-    @Query(value="select * from user_table ut where ut.phone like concat('%', :phone, '%')", nativeQuery = true)
-    Iterable<User> findCustomerByPhone(@Param("phone") String phone);
+    @Query(value="select * from user_table ut where ut.phone like concat('%', :phone, '%') and ut.id != :id", nativeQuery = true)
+    Iterable<User> findCustomerByPhone(@Param("phone") String phone, @Param("id") Long id);
 }

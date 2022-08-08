@@ -141,8 +141,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAllExcept(id);
     }
 
-    @GetMapping("/find-customer-by-name")
-    public Iterable<User> findCustomerByPhone(@RequestParam("name") String name){
-        return userRepository.findCustomerByPhone(name);
+    @GetMapping("/find-customer-by-phone")
+    public Iterable<User> findCustomerByPhone(String phone, Long id){
+        return userRepository.findCustomerByPhone(phone, id);
     }
 }

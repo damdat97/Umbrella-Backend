@@ -191,7 +191,7 @@ public class UserController {
     }
 
     @GetMapping("/users/find-customer-by-phone")
-    public ResponseEntity<Iterable<User>> findCustomerByPhone(@RequestParam(value = "phone") String phone) {
-        return new ResponseEntity<>(userService.findCustomerByPhone(phone), HttpStatus.OK);
+    public ResponseEntity<Iterable<User>> findCustomerByPhone(@RequestParam(value = "phone") String phone, @RequestParam(value = "id") Long id) {
+        return new ResponseEntity<>(userService.findCustomerByPhone(phone, id), HttpStatus.OK);
     }
 }

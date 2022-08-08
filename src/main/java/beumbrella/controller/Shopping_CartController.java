@@ -2,6 +2,7 @@ package beumbrella.controller;
 
 import beumbrella.model.CartItem;
 import beumbrella.model.Product;
+import beumbrella.model.User;
 import beumbrella.service.impl.CartServiceImpl;
 import beumbrella.service.impl.ProductServiceImpl;
 import beumbrella.service.impl.UserServiceImpl;
@@ -29,7 +30,7 @@ public class Shopping_CartController {
     UserServiceImpl userService;
     @GetMapping
     public ResponseEntity<Iterable<CartItem>> findAll() {
-        var result = cartService.findAll();
+        Iterable<CartItem> result = cartService.findAll();
         // 1. loại bỏ những cartItem có status là đã thanh toán
         // code
 
@@ -41,8 +42,8 @@ public class Shopping_CartController {
     }
 
     @PostMapping()
-    public <userId> ResponseEntity<CartItem> addToShoppingCart(@RequestBody CartItem cartItem) {
-        var currentUser = userService.getCurrentUser();
+    public ResponseEntity<CartItem> addToShoppingCart(@RequestBody CartItem cartItem) {
+         User currentUser = userService.getCurrentUser();
         cartItem.setUser(currentUser);
         Iterable<CartItem> listCart = cartService.findByUserId(cartItem.getUser().getId());
         Optional<Product> product = productService.findById(cartItem.getProduct().getId());
@@ -88,5 +89,10 @@ public class Shopping_CartController {
         cartItemOptional.get().getProduct().setQuantity(cartItemOptional.get().getProduct().getQuantity() + cartItemOptional.get().getQuantity());
        cartService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/find-all-carts-by-userId/{id}")
+    public ResponseEntity<Iterable<CartItem>> findAllCartItem(@PathVariable Long id) {
+        return new ResponseEntity<>(cartService.findAllCartByUserId(id), HttpStatus.OK);
     }
 }

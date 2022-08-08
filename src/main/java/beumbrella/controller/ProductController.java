@@ -55,13 +55,13 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/find-new-products")
-    public ResponseEntity<Iterable<Product>> findNewProduct() {
-        return new ResponseEntity<>(productService.findNewProduct(), HttpStatus.OK);
+    @GetMapping("/find-new-products/{id}")
+    public ResponseEntity<Iterable<Product>> findNewProduct(@PathVariable Long id) {
+        return new ResponseEntity<>(productService.findNewProduct(id), HttpStatus.OK);
     }
 
     @GetMapping("/find-products-by-category/{id}")
-    public ResponseEntity<Iterable<Product>> findProductByCategories(@PathVariable long id) {
+    public ResponseEntity<Iterable<Product>> findProductByCategories(@PathVariable Long id) {
         return new ResponseEntity<>(productService.findProductByCate(id), HttpStatus.OK);
     }
 

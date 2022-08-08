@@ -35,8 +35,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Iterable<Product> findNewProduct() {
-        return productRepository.findNewProduct();
+    public Iterable<Product> findNewProduct(Long id) {
+        return productRepository.findNewProduct(id);
     }
 
     @Override

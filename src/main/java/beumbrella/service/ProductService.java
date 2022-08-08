@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
 public interface ProductService extends GeneralService<Product> {
-    Iterable<Product> findNewProduct();
+    Iterable<Product> findNewProduct(Long id);
 
     Iterable<Product> findAllByNameContaining(String name);
 

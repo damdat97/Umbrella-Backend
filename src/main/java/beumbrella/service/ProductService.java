@@ -19,4 +19,8 @@ public interface ProductService extends GeneralService<Product> {
     Iterable<Product> findProductByUserId(Long id);
 
     Iterable<Product> findProductByCategoryAndUserIdNot(Long categoryId, Long userId);
+
+    Iterable<Product> findProductsByCustomerId(Long customerId, Long userId);
 }
+
+

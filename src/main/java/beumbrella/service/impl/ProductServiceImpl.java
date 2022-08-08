@@ -54,6 +54,11 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findProductByCategoryAndUserIdNot(categoryId, userId);
     }
 
+    @Override
+    public Iterable<Product> findProductsByCustomerId(Long customerId, Long userId) {
+        return productRepository.findProductsByCustomerId(customerId, userId);
+    }
+
 
     @Override
     public Iterable<Product> findAllByNameContaining(String name) {

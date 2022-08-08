@@ -184,4 +184,14 @@ public class UserController {
         return new ResponseEntity<Object>(
                 apiError, new HttpHeaders(), apiError.getStatus());
     }
+
+    @GetMapping("/users/find-all-customers-expect-user/{id}")
+    public ResponseEntity<Iterable<User>> findAllCustomersExpectUser(@PathVariable Long id) {
+        return new ResponseEntity<>(userService.findAllExcept(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/users/find-customer-by-phone")
+    public ResponseEntity<Iterable<User>> findCustomerByPhone(@RequestParam(value = "phone") String phone) {
+        return new ResponseEntity<>(userService.findCustomerByPhone(phone), HttpStatus.OK);
+    }
 }

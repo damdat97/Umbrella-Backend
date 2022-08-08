@@ -32,11 +32,7 @@ public class Shopping_CartController {
         var result = cartService.findAll();
         // 1. loại bỏ những cartItem có status là đã thanh toán
         // code
-        for (CartItem item : result){
-            if(item.isStatus()==false){
 
-            }
-        }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     @GetMapping({"/cart/{id}"})
@@ -45,9 +41,9 @@ public class Shopping_CartController {
     }
 
     @PostMapping()
-    public  ResponseEntity<CartItem> addToShoppingCart(@RequestBody CartItem cartItem) {
-        var curentUser = userService.getCurrentUser();
-        cartItem.setUser(curentUser);
+    public <userId> ResponseEntity<CartItem> addToShoppingCart(@RequestBody CartItem cartItem) {
+        var currentUser = userService.getCurrentUser();
+        cartItem.setUser(currentUser);
         Iterable<CartItem> listCart = cartService.findByUserId(cartItem.getUser().getId());
         Optional<Product> product = productService.findById(cartItem.getProduct().getId());
         for (CartItem item : listCart) {
@@ -56,6 +52,7 @@ public class Shopping_CartController {
                     item.setQuantity(item.getQuantity() + cartItem.getQuantity());
                     item.getProduct().setQuantity(item.getProduct().getQuantity() - cartItem.getQuantity());
                     cartItem.setDate(LocalDate.now());
+                    cartItem.setStatus(0);
                     cartService.save(item);
                     return new ResponseEntity<>(item, HttpStatus.OK);
                 } else {
@@ -65,6 +62,7 @@ public class Shopping_CartController {
         }
         product.get().setQuantity(product.get().getQuantity() - cartItem.getQuantity());
         cartItem.setDate(LocalDate.now());
+        cartItem.setStatus(0);
        cartService.save(cartItem);
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
     }

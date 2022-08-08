@@ -1,6 +1,7 @@
 package beumbrella.service;
 
 import beumbrella.model.User;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -30,4 +31,9 @@ public interface UserService extends UserDetailsService {
     Iterable<User> findByName(String name);
 
     Optional<User> lockedUser(Long id);
+
+    Iterable<User> findAllExcept(Long id);
+
+    Iterable<User> findCustomerByPhone(String phone);
+
 }

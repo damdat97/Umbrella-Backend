@@ -5,11 +5,14 @@ import beumbrella.model.UserPrinciple;
 import beumbrella.repository.UserRepository;
 import beumbrella.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
@@ -131,5 +134,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> lockedUser(Long id) {
         return userRepository.lockedUser(id);
+    }
+
+    @Override
+    public Iterable<User> findAllExcept(Long id) {
+        return userRepository.findAllExcept(id);
+    }
+
+    @GetMapping("/find-customer-by-name")
+    public Iterable<User> findCustomerByPhone(@RequestParam("name") String name){
+        return userRepository.findCustomerByPhone(name);
     }
 }

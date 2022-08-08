@@ -10,9 +10,8 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int quantity;
-    private boolean status;
-
-
+    private int status;
+    //status: 0. chưa thanh toán, 1. đã thanh toán, 2. đã hủy
     private LocalDate date;
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -24,14 +23,12 @@ public class CartItem {
     public CartItem() {
     }
 
+    public int getStatus() {
+        return status;
+    }
 
-
-    public CartItem(Long id, int quantity, boolean status, LocalDate date, Product product, User user) {
-        this.id = id;
-        this.quantity = quantity;
-        this.date = date;
-        this.product = product;
-        this.user = user;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public LocalDate getDate() {
@@ -56,13 +53,6 @@ public class CartItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
     }
 
     public Product getProduct() {

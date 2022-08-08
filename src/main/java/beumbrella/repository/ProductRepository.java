@@ -37,4 +37,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "where c.id = :categoryId and ut.id != :userId", nativeQuery = true)
     Iterable<Product> findProductByCategoryAndUserIdNot(@Param("categoryId") Long categoryId, @Param("userId") Long userId);
 
-}
+    @Query(value = "select *\n" +
+            "from products p\n" +
+            "         join user_table ut on p.user_id = ut.id\n" +
+            "where p.user_id = :customerId\n" +
+            "  and ut.id != :userId", nativeQuery = true)
+    Iterable<Product> findProductsByCustomerId(@Param("customerId") Long customerId, @Param("userId") Long userId);}
+
+

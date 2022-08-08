@@ -10,7 +10,7 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int quantity;
-
+    private boolean status;
 
 
     private LocalDate date;
@@ -24,7 +24,9 @@ public class CartItem {
     public CartItem() {
     }
 
-    public CartItem(Long id, int quantity, LocalDate date, Product product, User user) {
+
+
+    public CartItem(Long id, int quantity, boolean status, LocalDate date, Product product, User user) {
         this.id = id;
         this.quantity = quantity;
         this.date = date;
@@ -54,6 +56,13 @@ public class CartItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public Product getProduct() {

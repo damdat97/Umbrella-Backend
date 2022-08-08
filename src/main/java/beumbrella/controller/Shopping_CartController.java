@@ -32,7 +32,11 @@ public class Shopping_CartController {
         var result = cartService.findAll();
         // 1. loại bỏ những cartItem có status là đã thanh toán
         // code
+        for (CartItem item : result){
+            if(item.isStatus()==false){
 
+            }
+        }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     @GetMapping({"/cart/{id}"})
@@ -41,7 +45,7 @@ public class Shopping_CartController {
     }
 
     @PostMapping()
-    public <userId> ResponseEntity<CartItem> addToShoppingCart(@RequestBody CartItem cartItem) {
+    public  ResponseEntity<CartItem> addToShoppingCart(@RequestBody CartItem cartItem) {
         var curentUser = userService.getCurrentUser();
         cartItem.setUser(curentUser);
         Iterable<CartItem> listCart = cartService.findByUserId(cartItem.getUser().getId());

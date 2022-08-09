@@ -2,6 +2,7 @@ package beumbrella.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "cartItem")
@@ -10,9 +11,13 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int quantity;
+    private String billId;
     private int status;
-    //status: 0. chưa thanh toán, 1. đã thanh toán, 2. đã hủy
-    private LocalDate date;
+    //status: 0. chưa thanh toán, 1. cho xac nhan, 2. da thanh toan, 3. don bi huy
+    private LocalDateTime date;
+    @ManyToOne
+    @JoinColumn(name = "shop_id")
+    private User shopId;
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
@@ -20,7 +25,24 @@ public class CartItem {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public User getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(User shopId) {
+        this.shopId = shopId;
+    }
+
     public CartItem() {
+    }
+
+
+    public String getBillId() {
+        return billId;
+    }
+
+    public void setBillId(String billId) {
+        this.billId = billId;
     }
 
     public int getStatus() {
@@ -31,11 +53,11 @@ public class CartItem {
         this.status = status;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

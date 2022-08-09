@@ -14,8 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+import java.util.UUID;
 
 @Controller
 @CrossOrigin("*")
@@ -28,11 +31,13 @@ public class Shopping_CartController {
     ProductServiceImpl productService;
     @Autowired
     UserServiceImpl userService;
+
     @GetMapping
     public ResponseEntity<Iterable<CartItem>> findAll() {
         Iterable<CartItem> result = cartService.findAll();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
     @GetMapping({"/cart/{id}"})
     public ResponseEntity<Optional<CartItem>> findCartItem(@PathVariable Long id) {
         return new ResponseEntity<>(cartService.findById(id), HttpStatus.OK);
@@ -40,36 +45,62 @@ public class Shopping_CartController {
 
     @PostMapping()
     public ResponseEntity<CartItem> addToShoppingCart(@RequestBody CartItem cartItem) {
-         User currentUser = userService.getCurrentUser();
+        UUID uuid = UUID.randomUUID();
+        String billId = uuid.toString();
+        User currentUser = userService.getCurrentUser();
         cartItem.setUser(currentUser);
-        Iterable<CartItem> listCart = cartService.findAllCartByUserId(cartItem.getUser().getId());
         Optional<Product> product = productService.findById(cartItem.getProduct().getId());
-        for (CartItem item : listCart) {
-            if (item.getProduct().getId().equals(cartItem.getProduct().getId())) {
-                if (item.getQuantity() < item.getProduct().getQuantity()) {
-                    item.setQuantity(item.getQuantity() + cartItem.getQuantity());
-                    item.getProduct().setQuantity(item.getProduct().getQuantity() - cartItem.getQuantity());
-                    cartItem.setDate(LocalDate.now());
-                    cartItem.setStatus(0);
-                    cartService.save(item);
-                    return new ResponseEntity<>(item, HttpStatus.OK);
-                } else {
-                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        Optional<User> shopId = userService.findById(cartItem.getProduct().getUser().getId());
+        cartItem.setShopId(shopId.get());
+        List<CartItem> items = cartService.findAllCartByShopIdAndCustomerId(cartItem.getShopId().getId(), cartItem.getUser().getId());
+        if (items != null && items.size() > 0) {
+            billId = items.get(0).getBillId();
+            cartItem.setBillId(billId);
+            for (CartItem item : items) {
+                if (item.getProduct().getId().equals(cartItem.getProduct().getId())) {
+                    if (item.getQuantity() < item.getProduct().getQuantity()) {
+                        item.setQuantity(item.getQuantity() + cartItem.getQuantity());
+                        item.getProduct().setQuantity(item.getProduct().getQuantity() - cartItem.getQuantity());
+                        cartItem.setDate(LocalDateTime.now());
+                        cartItem.setStatus(0);
+                        cartService.save(item);
+                        return new ResponseEntity<>(item, HttpStatus.OK);
+                    } else {
+                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                    }
+                }
+            }
+        } else {
+            cartItem.setBillId(billId);
+            for (CartItem item : items) {
+                if (item.getProduct().getId().equals(cartItem.getProduct().getId())) {
+                    if (item.getQuantity() < item.getProduct().getQuantity()) {
+                        item.setQuantity(item.getQuantity() + cartItem.getQuantity());
+                        item.getProduct().setQuantity(item.getProduct().getQuantity() - cartItem.getQuantity());
+                        cartItem.setDate(LocalDateTime.now());
+                        cartItem.setStatus(0);
+                        cartService.save(item);
+                        return new ResponseEntity<>(item, HttpStatus.OK);
+                    } else {
+                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                    }
                 }
             }
         }
         product.get().setQuantity(product.get().getQuantity() - cartItem.getQuantity());
-        cartItem.setDate(LocalDate.now());
+        cartItem.setDate(LocalDateTime.now());
         cartItem.setStatus(0);
-       cartService.save(cartItem);
+        cartService.save(cartItem);
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
     }
+
 
 
     @PutMapping({"/checkout/{userId}"})
     public ResponseEntity<Boolean> checkout(@PathVariable Long userId) {
         return new ResponseEntity<>(cartService.checkout(userId), HttpStatus.OK);
     }
+
     @PutMapping({"/cart/{id}"})
     public ResponseEntity<CartItem> updateShoppingCart(@PathVariable Long id, @RequestBody CartItem cartItem) {
         Optional<CartItem> cartItemOptional = cartService.findById(id);
@@ -77,7 +108,7 @@ public class Shopping_CartController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         cartItem.setId(cartItemOptional.get().getId());
-        cartItemOptional.get().getProduct().setQuantity(cartItemOptional.get().getProduct().getQuantity() - (cartItem.getQuantity()-cartItemOptional.get().getQuantity()));
+        cartItemOptional.get().getProduct().setQuantity(cartItemOptional.get().getProduct().getQuantity() - (cartItem.getQuantity() - cartItemOptional.get().getQuantity()));
 
         cartService.save(cartItem);
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
@@ -87,8 +118,28 @@ public class Shopping_CartController {
     public ResponseEntity<CartItem> deleteShoppingCart(@PathVariable Long id) {
         Optional<CartItem> cartItemOptional = cartService.findById(id);
         cartItemOptional.get().getProduct().setQuantity(cartItemOptional.get().getProduct().getQuantity() + cartItemOptional.get().getQuantity());
-       cartService.remove(id);
+        cartService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/find-bill-by-status-equals-zero/{userId}")
+    public ResponseEntity<List<CartItem>> findBillsByStatusEqualsZero(@PathVariable Long userId) {
+        return new ResponseEntity<>(cartService.findBillStatusEqualsOne(userId), HttpStatus.OK);
+    }
+
+    @GetMapping("/find-bill-by-status-equals-one/{userId}")
+    public ResponseEntity<List<CartItem>> findBillsByStatusEqualsOne(@PathVariable Long userId) {
+        return new ResponseEntity<>(cartService.findBillStatusEqualsOne(userId), HttpStatus.OK);
+    }
+
+    @GetMapping("/find-bill-by-status-equals-two/{userId}")
+    public ResponseEntity<List<CartItem>> findBillsByStatusEqualsTwo(@PathVariable Long userId) {
+        return new ResponseEntity<>(cartService.findBillStatusEqualsOne(userId), HttpStatus.OK);
+    }
+
+    @GetMapping("/find-bill-by-status-equals-three/{userId}")
+    public ResponseEntity<List<CartItem>> findBillsByStatusEqualsThree(@PathVariable Long userId) {
+        return new ResponseEntity<>(cartService.findBillStatusEqualsOne(userId), HttpStatus.OK);
     }
 
     @GetMapping("/find-all-carts-by-userId/{id}")

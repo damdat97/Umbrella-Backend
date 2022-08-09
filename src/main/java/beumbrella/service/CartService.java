@@ -12,4 +12,8 @@ public interface CartService extends GeneralService<CartItem>{
 
     boolean checkout(Long userId);
 
+    Iterable<CartItem> findAllCartByProductAndUserId(Long id);
+
+    Iterable<CartItem> findDetailCart(Long id, Long cart_id);
+
 }

@@ -1,7 +1,6 @@
 package beumbrella.service;
 
 import beumbrella.model.CartItem;
-import beumbrella.repository.noentity.ReportByQuantity;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;

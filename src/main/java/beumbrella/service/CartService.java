@@ -12,7 +12,7 @@ public interface CartService extends GeneralService<CartItem> {
 
     Iterable<CartItem> findAllCartByProductAndUserId(Long id);
 
-    Iterable<CartItem> findDetailCart(Long id, Long cart_id);
+    Iterable<CartItem> findDetailCart(String billId);
 
     List<CartItem> findAllCartByShopIdAndCustomerId(Long shopId, Long customerId);
 

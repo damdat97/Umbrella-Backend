@@ -154,9 +154,9 @@ public class Shopping_CartController {
         return new ResponseEntity<>(cartService.findAllCartByProductAndUserId(id), HttpStatus.OK);
     }
 
-    @GetMapping("/find-cart-by-cartId/{id}/{cartId}")
-    public ResponseEntity<Iterable<CartItem>> findCartItemByCartId(@PathVariable Long id, @PathVariable Long cartId) {
-        return new ResponseEntity<>(cartService.findDetailCart(id, cartId), HttpStatus.OK);
+    @GetMapping("/find-cart-by-billId")
+    public ResponseEntity<Iterable<CartItem>> findCartItemByCartId(@RequestParam(value = "billId") String billId) {
+        return new ResponseEntity<>(cartService.findDetailCart(billId), HttpStatus.OK);
     }
 
     @PutMapping("/accept-bill-by-shop/{id}")
@@ -176,6 +176,7 @@ public class Shopping_CartController {
         if (!cartItemOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        cartItemOptional.get().getProduct().setQuantity(cartItemOptional.get().getProduct().getQuantity() + cartItemOptional.get().getQuantity());
         cartItem.setStatus(3);
         cartService.save(cartItem);
         return new ResponseEntity<>(cartItem, HttpStatus.OK);

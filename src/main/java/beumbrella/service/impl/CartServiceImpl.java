@@ -4,6 +4,7 @@ import beumbrella.model.CartItem;
 import beumbrella.model.Product;
 import beumbrella.repository.CartRepository;
 import beumbrella.repository.UserRepository;
+import beumbrella.repository.noentity.ReportByQuantity;
 import beumbrella.service.CartService;
 import beumbrella.service.CategoryService;
 import lombok.var;
@@ -100,7 +101,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Iterable<CartItem> findBillStatusEqualsZero(Long userId) {
+    public Iterable<ReportByQuantity> findBillStatusEqualsZero(Long userId) {
         return cartRepository.findBillStatusEqualsZero(userId);
     }
 

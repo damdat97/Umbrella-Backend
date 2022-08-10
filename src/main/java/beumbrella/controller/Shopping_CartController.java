@@ -3,6 +3,7 @@ package beumbrella.controller;
 import beumbrella.model.CartItem;
 import beumbrella.model.Product;
 import beumbrella.model.User;
+import beumbrella.repository.noentity.ReportByQuantity;
 import beumbrella.service.impl.CartServiceImpl;
 import beumbrella.service.impl.ProductServiceImpl;
 import beumbrella.service.impl.UserServiceImpl;
@@ -123,7 +124,7 @@ public class Shopping_CartController {
     }
 
     @GetMapping("/find-bill-by-status-equals-zero/{userId}")
-    public ResponseEntity<Iterable<CartItem>> findBillsByStatusEqualsZero(@PathVariable Long userId) {
+    public ResponseEntity<Iterable<ReportByQuantity>> findBillsByStatusEqualsZero(@PathVariable Long userId) {
         return new ResponseEntity<>(cartService.findBillStatusEqualsZero(userId), HttpStatus.OK);
     }
 

@@ -1,6 +1,7 @@
 package beumbrella.service;
 
 import beumbrella.model.CartItem;
+import beumbrella.repository.noentity.ReportByQuantity;
 import org.springframework.data.repository.query.Param;
 import org.w3c.dom.stylesheets.LinkStyle;
 
@@ -18,7 +19,7 @@ public interface CartService extends GeneralService<CartItem>{
 
     List<CartItem> findAllCartByShopIdAndCustomerId(Long shopId, Long customerId);
 
-    Iterable<CartItem> findBillStatusEqualsZero(Long userId);
+    Iterable<ReportByQuantity> findBillStatusEqualsZero(Long userId);
     Iterable<CartItem> findBillStatusEqualsOne(Long userId);
     Iterable<CartItem> findBillStatusEqualsTwo(Long userId);
     Iterable<CartItem> findBillStatusEqualsThree(Long userId);

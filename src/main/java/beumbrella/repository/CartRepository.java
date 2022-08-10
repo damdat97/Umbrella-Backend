@@ -1,6 +1,7 @@
 package beumbrella.repository;
 
 import beumbrella.model.CartItem;
+import beumbrella.repository.noentity.ReportByQuantity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,13 +19,11 @@ public interface CartRepository extends JpaRepository<CartItem,Long> {
     Iterable<CartItem> findAllCartByUserId(@Param("id") Long id);
 
     @Query(value = "select * from cart_item join products p on cart_item.product_id = p.id\n" +
-            "join user_table ut on p.user_id = ut.id\n" +
-            "where p.user_id = :id", nativeQuery = true)
+            "            where shop_id = :id", nativeQuery = true)
     Iterable<CartItem> findAllCartByProductAndUserId(@Param("id") Long id);
 
     @Query(value="select * from cart_item join products p on cart_item.product_id = p.id\n" +
-            "join user_table ut on p.user_id = ut.id\n" +
-            "where p.user_id = :id and cart_item.id = :cart_id", nativeQuery = true)
+            "where shop_id = :id and cart_item.id = :cart_id", nativeQuery = true)
     Iterable<CartItem> findDetailCart(@Param("id") Long id, @Param("cart_id") Long cart_id);
 
     @Query(value = "select * from cart_item c join products p on c.product_id = p.id\n" +
@@ -32,8 +31,8 @@ public interface CartRepository extends JpaRepository<CartItem,Long> {
             "where p.user_id = :shopId and c.user_id = :customerId and c.status = 0 ", nativeQuery = true)
     List<CartItem> findAllCartByShopIdAndCustomerId(@Param("shopId") Long shopId, @Param("customerId") Long customerId);
 
-    @Query(value = "select * from cart_item c where c.user_id = :userId and status = 0", nativeQuery = true)
-    Iterable<CartItem> findBillStatusEqualsZero(@Param("userId") Long userId);
+    @Query(value = "select c.id, c.product_id as product, c.bill_id as billId, sum(c.quantity) as quantity, c.status, c.shop_id as shopId, c.user_id as userId from cart_item c where c.status = 0 and c.user_id = :userId group by c.bill_id;", nativeQuery = true)
+    Iterable<ReportByQuantity> findBillStatusEqualsZero(@Param("userId") Long userId);
 
     @Query(value = "select * from cart_item c where c.user_id = :userId and status = 1", nativeQuery = true)
     Iterable<CartItem> findBillStatusEqualsOne(@Param("userId") Long userId);

@@ -32,15 +32,15 @@ public interface CartRepository extends JpaRepository<CartItem,Long> {
             "where p.user_id = :shopId and c.user_id = :customerId and c.status = 0 ", nativeQuery = true)
     List<CartItem> findAllCartByShopIdAndCustomerId(@Param("shopId") Long shopId, @Param("customerId") Long customerId);
 
-    @Query(value = "select c.bill_id, c.date, sum(c.quantity), c.shop_id from cart_item c where c.user_id = :userId and status = 0", nativeQuery = true)
-    List<CartItem> findBillStatusEqualsZero(@Param("userId") Long userId);
+    @Query(value = "select * from cart_item c where c.user_id = :userId and status = 0", nativeQuery = true)
+    Iterable<CartItem> findBillStatusEqualsZero(@Param("userId") Long userId);
 
-    @Query(value = "select c.bill_id, c.date, sum(c.quantity), c.shop_id from cart_item c where c.user_id = :userId and status = 1", nativeQuery = true)
-    List<CartItem> findBillStatusEqualsOne(@Param("userId") Long userId);
+    @Query(value = "select * from cart_item c where c.user_id = :userId and status = 1", nativeQuery = true)
+    Iterable<CartItem> findBillStatusEqualsOne(@Param("userId") Long userId);
 
-    @Query(value = "select c.bill_id, c.date, sum(c.quantity), c.shop_id from cart_item c where c.user_id = :userId and status = 2", nativeQuery = true)
-    List<CartItem> findBillStatusEqualsTwo(@Param("userId") Long userId);
+    @Query(value = "select * from cart_item c where c.user_id = :userId and status = 2", nativeQuery = true)
+    Iterable<CartItem> findBillStatusEqualsTwo(@Param("userId") Long userId);
 
-    @Query(value = "select c.bill_id, c.date, sum(c.quantity), c.shop_id from cart_item c where c.user_id = :userId and status = 3", nativeQuery = true)
-    List<CartItem> findBillStatusEqualsThree(@Param("userId") Long userId);
+    @Query(value = "select * from cart_item c where c.user_id = :userId and status = 3", nativeQuery = true)
+    Iterable<CartItem> findBillStatusEqualsThree(@Param("userId") Long userId);
 }

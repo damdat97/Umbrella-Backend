@@ -100,22 +100,22 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartItem> findBillStatusEqualsZero(Long userId) {
+    public Iterable<CartItem> findBillStatusEqualsZero(Long userId) {
         return cartRepository.findBillStatusEqualsZero(userId);
     }
 
     @Override
-    public List<CartItem> findBillStatusEqualsOne(Long userId) {
+    public Iterable<CartItem> findBillStatusEqualsOne(Long userId) {
         return cartRepository.findBillStatusEqualsOne(userId);
     }
 
     @Override
-    public List<CartItem> findBillStatusEqualsTwo(Long userId) {
+    public Iterable<CartItem> findBillStatusEqualsTwo(Long userId) {
         return cartRepository.findBillStatusEqualsTwo(userId);
     }
 
     @Override
-    public List<CartItem> findBillStatusEqualsThree(Long userId) {
+    public Iterable<CartItem> findBillStatusEqualsThree(Long userId) {
         return cartRepository.findBillStatusEqualsThree(userId);
     }
 }

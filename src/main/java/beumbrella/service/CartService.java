@@ -18,8 +18,8 @@ public interface CartService extends GeneralService<CartItem>{
 
     List<CartItem> findAllCartByShopIdAndCustomerId(Long shopId, Long customerId);
 
-    List<CartItem> findBillStatusEqualsZero(Long userId);
-    List<CartItem> findBillStatusEqualsOne(Long userId);
-    List<CartItem> findBillStatusEqualsTwo(Long userId);
-    List<CartItem> findBillStatusEqualsThree(Long userId);
+    Iterable<CartItem> findBillStatusEqualsZero(Long userId);
+    Iterable<CartItem> findBillStatusEqualsOne(Long userId);
+    Iterable<CartItem> findBillStatusEqualsTwo(Long userId);
+    Iterable<CartItem> findBillStatusEqualsThree(Long userId);
 }

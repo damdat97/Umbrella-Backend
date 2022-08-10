@@ -123,23 +123,23 @@ public class Shopping_CartController {
     }
 
     @GetMapping("/find-bill-by-status-equals-zero/{userId}")
-    public ResponseEntity<List<CartItem>> findBillsByStatusEqualsZero(@PathVariable Long userId) {
-        return new ResponseEntity<>(cartService.findBillStatusEqualsOne(userId), HttpStatus.OK);
+    public ResponseEntity<Iterable<CartItem>> findBillsByStatusEqualsZero(@PathVariable Long userId) {
+        return new ResponseEntity<>(cartService.findBillStatusEqualsZero(userId), HttpStatus.OK);
     }
 
     @GetMapping("/find-bill-by-status-equals-one/{userId}")
-    public ResponseEntity<List<CartItem>> findBillsByStatusEqualsOne(@PathVariable Long userId) {
+    public ResponseEntity<Iterable<CartItem>> findBillsByStatusEqualsOne(@PathVariable Long userId) {
         return new ResponseEntity<>(cartService.findBillStatusEqualsOne(userId), HttpStatus.OK);
     }
 
     @GetMapping("/find-bill-by-status-equals-two/{userId}")
-    public ResponseEntity<List<CartItem>> findBillsByStatusEqualsTwo(@PathVariable Long userId) {
-        return new ResponseEntity<>(cartService.findBillStatusEqualsOne(userId), HttpStatus.OK);
+    public ResponseEntity<Iterable<CartItem>> findBillsByStatusEqualsTwo(@PathVariable Long userId) {
+        return new ResponseEntity<>(cartService.findBillStatusEqualsTwo(userId), HttpStatus.OK);
     }
 
     @GetMapping("/find-bill-by-status-equals-three/{userId}")
-    public ResponseEntity<List<CartItem>> findBillsByStatusEqualsThree(@PathVariable Long userId) {
-        return new ResponseEntity<>(cartService.findBillStatusEqualsOne(userId), HttpStatus.OK);
+    public ResponseEntity<Iterable<CartItem>> findBillsByStatusEqualsThree(@PathVariable Long userId) {
+        return new ResponseEntity<>(cartService.findBillStatusEqualsThree(userId), HttpStatus.OK);
     }
 
     @GetMapping("/find-all-carts-by-userId/{id}")

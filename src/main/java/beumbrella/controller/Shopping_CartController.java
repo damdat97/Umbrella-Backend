@@ -7,18 +7,15 @@ import beumbrella.repository.noentity.ReportByQuantity;
 import beumbrella.service.impl.CartServiceImpl;
 import beumbrella.service.impl.ProductServiceImpl;
 import beumbrella.service.impl.UserServiceImpl;
-import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.UUID;
 
 @Controller
@@ -124,7 +121,7 @@ public class Shopping_CartController {
     }
 
     @GetMapping("/find-bill-by-status-equals-zero/{userId}")
-    public ResponseEntity<Iterable<ReportByQuantity>> findBillsByStatusEqualsZero(@PathVariable Long userId) {
+    public ResponseEntity<Iterable<CartItem>> findBillsByStatusEqualsZero(@PathVariable Long userId) {
         return new ResponseEntity<>(cartService.findBillStatusEqualsZero(userId), HttpStatus.OK);
     }
 
@@ -156,5 +153,27 @@ public class Shopping_CartController {
     @GetMapping("/find-cart-by-cartId/{id}/{cartId}")
     public ResponseEntity<Iterable<CartItem>> findCartItemByCartId(@PathVariable Long id, @PathVariable Long cartId) {
         return new ResponseEntity<>(cartService.findDetailCart(id, cartId), HttpStatus.OK);
+    }
+
+    @PutMapping("/accept-bill-by-shop/{id}")
+    public ResponseEntity<CartItem> acceptBill(@PathVariable Long id,@RequestBody CartItem cartItem) {
+        Optional<CartItem> cartItemOptional = cartService.findById(id);
+        if (!cartItemOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        cartItem.setStatus(2);
+        cartService.save(cartItem);
+        return new ResponseEntity<>(cartItem, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete-bill-by-shop/{id}")
+    public ResponseEntity<CartItem> deleteBill(@PathVariable Long id,@RequestBody CartItem cartItem) {
+        Optional<CartItem> cartItemOptional = cartService.findById(id);
+        if (!cartItemOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        cartItem.setStatus(3);
+        cartService.save(cartItem);
+        return new ResponseEntity<>(cartItem, HttpStatus.OK);
     }
 }

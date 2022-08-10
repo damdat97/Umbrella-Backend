@@ -6,7 +6,6 @@ import beumbrella.repository.CartRepository;
 import beumbrella.repository.UserRepository;
 import beumbrella.repository.noentity.ReportByQuantity;
 import beumbrella.service.CartService;
-import beumbrella.service.CategoryService;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -101,7 +100,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Iterable<ReportByQuantity> findBillStatusEqualsZero(Long userId) {
+    public Iterable<CartItem> findBillStatusEqualsZero(Long userId) {
         return cartRepository.findBillStatusEqualsZero(userId);
     }
 

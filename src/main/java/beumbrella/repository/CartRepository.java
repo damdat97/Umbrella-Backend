@@ -31,8 +31,8 @@ public interface CartRepository extends JpaRepository<CartItem,Long> {
             "where p.user_id = :shopId and c.user_id = :customerId and c.status = 0 ", nativeQuery = true)
     List<CartItem> findAllCartByShopIdAndCustomerId(@Param("shopId") Long shopId, @Param("customerId") Long customerId);
 
-    @Query(value = "select c.id, c.product_id as product, c.bill_id as billId, sum(c.quantity) as quantity, c.status, c.shop_id as shopId, c.user_id as userId from cart_item c where c.status = 0 and c.user_id = :userId group by c.bill_id;", nativeQuery = true)
-    Iterable<ReportByQuantity> findBillStatusEqualsZero(@Param("userId") Long userId);
+    @Query(value = "select * from cart_item c where c.user_id = :userId and status = 0", nativeQuery = true)
+    Iterable<CartItem> findBillStatusEqualsZero(@Param("userId") Long userId);
 
     @Query(value = "select * from cart_item c where c.user_id = :userId and status = 1", nativeQuery = true)
     Iterable<CartItem> findBillStatusEqualsOne(@Param("userId") Long userId);

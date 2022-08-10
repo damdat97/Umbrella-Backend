@@ -18,7 +18,7 @@ public interface CartRepository extends JpaRepository<CartItem,Long> {
     Iterable<CartItem> findAllCartByUserId(@Param("id") Long id);
 
     @Query(value = "select * from cart_item join products p on cart_item.product_id = p.id\n" +
-            "            where shop_id = :id", nativeQuery = true)
+            "            where shop_id = :id group by bill_id", nativeQuery = true)
     Iterable<CartItem> findAllCartByProductAndUserId(@Param("id") Long id);
 
     @Query(value="select * from cart_item join products p on cart_item.product_id = p.id\n" +

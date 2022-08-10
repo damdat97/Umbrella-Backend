@@ -12,7 +12,7 @@ public interface ProductService extends GeneralService<Product> {
 
     Iterable<Product> findAllByUserIdNot(@Param("id") Long id);
 
-    Iterable<Product> find(String name,String description, Integer from, Integer to);
+    Iterable<Product> find(String name,String description, Integer from, Integer to, Long userId);
 
     Iterable<Product> findProductByCate(long id);
 

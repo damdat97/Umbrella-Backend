@@ -73,8 +73,8 @@ public class ProductController {
     }
 
     @GetMapping("/find-products-by-filter")
-    public ResponseEntity<Iterable<Product>> find(@RequestParam String name, @RequestParam String description, @RequestParam Integer from, @RequestParam Integer to) {
-        return new ResponseEntity<>(productService.find('%' + name + '%', '%'+ description + '%', from, to), HttpStatus.OK);
+    public ResponseEntity<Iterable<Product>> find(@RequestParam String name, @RequestParam String description, @RequestParam Integer from, @RequestParam Integer to, @RequestParam Long userId) {
+        return new ResponseEntity<>(productService.find('%' + name + '%', '%'+ description + '%', from, to, userId), HttpStatus.OK);
     }
     @GetMapping("/find-my-shop/{id}")
     public ResponseEntity<Iterable<Product>> findProductByUserId(@PathVariable Long id){

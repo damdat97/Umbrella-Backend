@@ -71,8 +71,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Iterable<Product> find(String name, String description, Integer from, Integer to) {
-        return productRepository.find(name,description, from, to);
+    public Iterable<Product> find(String name, String description, Integer from, Integer to, Long userId) {
+        return productRepository.find(name,description, from, to, userId);
     }
 
 

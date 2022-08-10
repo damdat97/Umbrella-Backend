@@ -25,11 +25,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "select * from products p join user_table ut on p.user_id = ut.id where p.user_id != :id", nativeQuery = true)
     Iterable<Product> findAllByUserIdNot(@Param("id") Long id);
 
-    @Query(value = "select * from products p  where(:name is null or p.name like :name ) and (:description is null or p.description like :description) and (:from is null or p.price >=:from) and(:to is null or p.price<=:to)", nativeQuery = true)
+    @Query(value = "select * from products p  where(:name is null or p.name like :name ) and (:description is null or p.description like :description) and (:from is null or p.price >=:from) and(:to is null or p.price<=:to) and p.user_id != :userId", nativeQuery = true)
     Iterable<Product> find(@Param("name") String name,
                                       @Param("description") String description,
                                       @Param("from") Integer from,
-                                      @Param("to") Integer to);
+                                      @Param("to") Integer to,
+                                      @Param("userId") Long userId);
+
     @Query(value = "select * from products where user_id = :id", nativeQuery = true)
     Iterable<Product> findProductByUserId(@Param("id") Long id);
 

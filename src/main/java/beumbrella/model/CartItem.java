@@ -10,7 +10,7 @@ public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int quantity;
+    int quantity;
     private String billId;
     private int status;
     //status: 0. chưa thanh toán, 1. cho xac nhan, 2. da thanh toan, 3. don bi huy

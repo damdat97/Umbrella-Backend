@@ -3,7 +3,6 @@ package beumbrella.controller;
 import beumbrella.model.CartItem;
 import beumbrella.model.Product;
 import beumbrella.model.User;
-import beumbrella.repository.noentity.ReportByQuantity;
 import beumbrella.service.impl.CartServiceImpl;
 import beumbrella.service.impl.ProductServiceImpl;
 import beumbrella.service.impl.UserServiceImpl;
@@ -120,6 +119,11 @@ public class Shopping_CartController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/find-all-cart-by-customer-id/{userId}")
+    public ResponseEntity<Iterable<CartItem>> findAllCartByCustomerId(@PathVariable Long userId) {
+        return new ResponseEntity<>(cartService.findAllCartByCustomerId(userId), HttpStatus.OK);
+    }
+
     @GetMapping("/find-bill-by-status-equals-zero/{userId}")
     public ResponseEntity<Iterable<CartItem>> findBillsByStatusEqualsZero(@PathVariable Long userId) {
         return new ResponseEntity<>(cartService.findBillStatusEqualsZero(userId), HttpStatus.OK);
@@ -166,7 +170,7 @@ public class Shopping_CartController {
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete-bill-by-shop/{id}")
+    @PutMapping("/delete-bill-by-shop/{id}")
     public ResponseEntity<CartItem> deleteBill(@PathVariable Long id,@RequestBody CartItem cartItem) {
         Optional<CartItem> cartItemOptional = cartService.findById(id);
         if (!cartItemOptional.isPresent()) {

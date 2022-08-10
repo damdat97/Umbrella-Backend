@@ -4,7 +4,7 @@ import beumbrella.model.CartItem;
 import beumbrella.model.Product;
 import beumbrella.repository.CartRepository;
 import beumbrella.repository.UserRepository;
-import beumbrella.repository.noentity.ReportByQuantity;
+
 import beumbrella.service.CartService;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import java.util.*;
 public class CartServiceImpl implements CartService {
     @Autowired
     CartRepository cartRepository;
-    Map<Integer, Product> maps = new HashMap<>();
     @Autowired
     UserRepository userRepository;
 
@@ -117,5 +116,10 @@ public class CartServiceImpl implements CartService {
     @Override
     public Iterable<CartItem> findBillStatusEqualsThree(Long userId) {
         return cartRepository.findBillStatusEqualsThree(userId);
+    }
+
+    @Override
+    public Iterable<CartItem> findAllCartByCustomerId(Long userId) {
+        return cartRepository.findAllCartByCustomerId(userId);
     }
 }

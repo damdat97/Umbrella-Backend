@@ -1,7 +1,6 @@
 package beumbrella.repository;
 
 import beumbrella.model.CartItem;
-import beumbrella.repository.noentity.ReportByQuantity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -42,4 +41,7 @@ public interface CartRepository extends JpaRepository<CartItem,Long> {
 
     @Query(value = "select * from cart_item c where c.user_id = :userId and status = 3", nativeQuery = true)
     Iterable<CartItem> findBillStatusEqualsThree(@Param("userId") Long userId);
+
+    @Query(value = "select * from cart_item c where c.user_id = :userId", nativeQuery = true)
+    Iterable<CartItem> findAllCartByCustomerId(@Param("userId") Long userId);
 }
